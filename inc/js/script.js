@@ -19,7 +19,7 @@ $(document).ready(($) => {
       const pageHtml = await res.text();
       $("<div>")
         .addClass("page")
-        .css("background-image", `url('./inc/img/page ${pageNum}.png')`)
+        .css("background-image", `url('./inc/img/page ${Math.floor(pageNum)}.png')`)
         .html(pageHtml)
         .appendTo(container);
       await getPage(++pageNum, BOOK);
