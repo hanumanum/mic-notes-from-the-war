@@ -1,7 +1,85 @@
 * {
   box-sizing: border-box;
+  font-size: 100%;
 }
 body {
   margin: 0;
   padding: 0;
+  overflow: hidden;
+
+}
+#root {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 55px calc(100vh - 55px);
+  background-color: #202020;
+}
+/* ____________ */
+/* HEADER  */
+/* ____________ */
+header {
+  height: 55px;
+  background-color: #978a77;
+  display: flex;
+  align-items: center;
+  padding: 14px;
+}
+header > div {
+  display: flex;
+  align-items: center;
+}
+header .menu_icon {
+  display: flex;
+  margin-right: 14px;
+}
+header .menu_icon i {
+  color: #000;
+  font-size: 33px;
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+header > .menu_icon:hover i {
+  color: #fff;
+}
+header h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+}
+/* ____________ */
+/* BOOK  */
+/* ____________ */
+
+#book {
+  /* background-color: #ccc; */
+  opacity: 0;
+  margin: auto;
+  
+}
+#book .page-wrapper {
+  /* background-color: #ccc; */
+}
+#book .page {
+
+background-size:200% 100%;
+}
+.page.odd{
+  background-size: 200% 100% !important;
+  background-position-x: 100%;
+}
+/* ____________ */
+/* BOOK BORDER  */
+/* ____________ */
+#book-border {
+  position: fixed;
+  top: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+#book-border img {
+  width: calc(100vw * 60 / 100 + 150px);
+  height: calc(100vh - 55px - 120px + 91px);
 }
