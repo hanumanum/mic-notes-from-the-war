@@ -44,7 +44,7 @@ $(document).ready(($) => {
       if (pageid === 8) {
 
         const configNoLoop = {
-          imagesPath: "/inc/img/lika/Lika_Skizb_resized",
+          imagesPath: "../inc/img/lika/Lika_Skizb_resized",
           images_slug: "Lika_Skizb_",
           lastNumber: 177,
           positions: 5,
@@ -52,7 +52,7 @@ $(document).ready(($) => {
         }
 
         const configLoop = {
-          imagesPath: "/inc/img/lika/Lika_Loop_resized",
+          imagesPath: "../inc/img/lika/Lika_Loop_resized",
           images_slug: "Lika_Loop_",
           lastNumber: 88,
           positions: 5,
