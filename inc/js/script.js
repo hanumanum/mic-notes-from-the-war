@@ -1,8 +1,7 @@
 let pageid = Number(window.location.hash.replace("#", ""))
 const turnSound = document.getElementById("turnsound")
-//pageid = (pageid == 0 || pageid == 1) ? 3 : pageid
-//pageid
-//console.log(pageid)
+let animationSound = undefined
+pageid = (pageid == 1) ? 3 : pageid
 
 let animate = false
 const animatonRate = 50
@@ -22,14 +21,12 @@ const BACKGROUNDS = [
   "",           //11
 ]
 
-function fixToLeftPage(pageID) {
-  return (pageID % 2 == 0) ? pageID : pageID - 1
-}
-
 $(document).ready(($) => {
   turnByKeyboard()
   const ROOT_ELEMENT = $("#root");
   const BOOK = $("<div>").attr("id", "book").appendTo(ROOT_ELEMENT);
+
+
   (async () => {
     await getPage(1, BOOK);
     $(BOOK).css("opacity", "1");
@@ -51,34 +48,19 @@ $(document).ready(($) => {
       pageid = fixToLeftPage(pageid)
       window.location.hash = pageid
 
+      stopAnimationSound()
       initAnimation(pageid)
 
     });
 
 
-    $(BOOK).turn('page', 2);
+    $(BOOK).turn('page', pageid);
   })();
 
 
-  async function getPage(pageNum, container) {
-    const res = await fetch(
-      `./pages/${$("html").attr("lang")}/p-${pageNum}.html`
-    );
-    if (res.status != 404) {
-      const pageHtml = await res.text();
-      const bookPage = $("<div>").addClass("page").html(pageHtml)
-
-      if (BACKGROUNDS[pageNum] != undefined) {
-        bookPage.css("background-image", `url('./inc/img/${BACKGROUNDS[pageNum]}')`)
-      }
-      bookPage.appendTo(container);
-
-      await getPage(++pageNum, BOOK);
-    }
-  }
-
   function turnByKeyboard() {
     document.addEventListener("keydown", keyboardControl);
+
     function keyboardControl(e) {
       if (e.key == "ArrowRight") {
         $(BOOK).turn('next')
@@ -86,17 +68,38 @@ $(document).ready(($) => {
       else if (e.key == "ArrowLeft") {
         $(BOOK).turn('previous')
       }
-
     }
+
   }
 
 });
 
 
+
+
+async function getPage(pageNum, container) {
+  const res = await fetch(
+    `./pages/${$("html").attr("lang")}/p-${pageNum}.html`
+  );
+  if (res.status != 404) {
+    const pageHtml = await res.text();
+
+    const bookPage = $("<div>").addClass("page").html(pageHtml)
+    if (BACKGROUNDS[pageNum] != undefined) {
+      bookPage.css("background-image", `url('./inc/img/${BACKGROUNDS[pageNum]}')`)
+    }
+    bookPage.appendTo(container);
+
+    await getPage(++pageNum, container);
+  }
+}
+
 function initAnimation(pageid, cb) {
   let page = getDataByPageID(pageid)
 
   if (page != null) {
+    startAnimationSound(pageid)
+
     animate = true
     const configNoLoop = page.configNoLoop
     const configLoop = page.configLoop
@@ -113,4 +116,22 @@ function initAnimation(pageid, cb) {
 
     }
   }
+}
+
+function stopAnimationSound() {
+  if (animationSound !== undefined) {
+    animationSound.pause()
+    animationSound.currentTime = 0
+  }
+}
+
+
+function startAnimationSound(pageid) {
+  animationSound = document.getElementById("animation-sound-page" + pageid)
+  animationSound.loop = true
+  animationSound.play()
+}
+
+function fixToLeftPage(pageID) {
+  return (pageID % 2 == 0) ? pageID : pageID - 1
 }

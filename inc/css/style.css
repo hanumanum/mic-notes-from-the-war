@@ -294,3 +294,7 @@ h2.toc-title::before {
 #turnsound{
   display: none;
 }
+
+.animation-sound{
+  display: none;
+}
