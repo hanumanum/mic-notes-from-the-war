@@ -1,7 +1,7 @@
 let pageid = Number(window.location.hash.replace("#", ""))
 const turnSound = document.getElementById("turnsound")
 let animationSound = undefined
-pageid = (pageid == 1) ? 3 : pageid
+pageid = (pageid==0 || pageid == 1) ? 2 : pageid
 
 let animate = false
 const animatonRate = 50
@@ -119,7 +119,7 @@ function initAnimation(pageid, cb) {
 }
 
 function stopAnimationSound() {
-  if (animationSound !== undefined) {
+  if (animationSound !== undefined && animationSound!== null) {
     animationSound.pause()
     animationSound.currentTime = 0
   }
@@ -128,8 +128,10 @@ function stopAnimationSound() {
 
 function startAnimationSound(pageid) {
   animationSound = document.getElementById("animation-sound-page" + pageid)
-  animationSound.loop = true
-  animationSound.play()
+  if(animationSound){
+    animationSound.loop = true
+    animationSound.play()
+  }
 }
 
 function fixToLeftPage(pageID) {
