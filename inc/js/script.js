@@ -19,6 +19,13 @@ const BACKGROUNDS = [
   "page 2.png", //9
   "",           //10
   "",           //11
+  "page 6.png", //12
+  "page 6.png", //13
+  "page 6.png", //14
+  "page 6.png", //15
+  "page 6.png", //16
+  "page 6.png", //17
+
 ]
 
 $(document).ready(($) => {

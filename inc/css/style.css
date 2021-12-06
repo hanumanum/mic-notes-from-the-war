@@ -298,3 +298,18 @@ h2.toc-title::before {
 .animation-sound{
   display: none;
 }
+
+.page-article-page p{
+  /* padding: 6px 7%; */
+  margin: 13px 9% 0px 9%;
+}
+
+.stars{
+
+}
+
+.date{
+  margin-top: 0px !important;
+  text-align: right;
+  padding-top: 3px;
+}
