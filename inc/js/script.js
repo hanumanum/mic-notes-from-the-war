@@ -98,7 +98,7 @@ function initAnimation(pageid, cb) {
   let page = getDataByPageID(pageid)
 
   if (page != null) {
-    startAnimationSound(pageid)
+    initAnimationSound(pageid)
 
     animate = true
     const configNoLoop = page.configNoLoop
@@ -119,14 +119,14 @@ function initAnimation(pageid, cb) {
 }
 
 function stopAnimationSound() {
-  if (animationSound !== undefined && animationSound!== null) {
+  if (animationSound) {
     animationSound.pause()
     animationSound.currentTime = 0
   }
 }
 
 
-function startAnimationSound(pageid) {
+function initAnimationSound(pageid) {
   animationSound = document.getElementById("animation-sound-page" + pageid)
   if(animationSound){
     animationSound.loop = true
