@@ -1,34 +1,33 @@
-/*
-window.requestAnimationFrame = window.requestAnimationFrame
-    || window.mozRequestAnimationFrame
-    || window.webkitRequestAnimationFrame
-    || window.msRequestAnimationFrame
-    || function(f){return setTimeout(f, 1000/60)} // simulate calling code 60 
- 
-window.cancelAnimationFrame = window.cancelAnimationFrame
-    || window.mozCancelAnimationFrame
-    || function(requestID){clearTimeout(requestID)} //fall back
-*/
-
-
 let pageid = Number(window.location.hash.replace("#", ""))
+const turnSound = document.getElementById("turnsound")
+//pageid = (pageid == 0 || pageid == 1) ? 3 : pageid
+//pageid
+//console.log(pageid)
+
+let animate = false
 const animatonRate = 50
-pageid = (pageid == 0) ? 3 : pageid
 
 const BACKGROUNDS = [
   undefined,  //0
   undefined,   //1
-  "page 7.png", //2
-  "page 7.png", //3
+  undefined,  //2
+  undefined,  //3
   "page 7.png", //4
   "page 7.png", //5
-  "page 2.png", //6
-  "page 2.png", //7
-  "",           //8
-  "",           //9
+  "page 7.png", //6
+  "page 7.png", //7
+  "page 2.png", //8
+  "page 2.png", //9
+  "",           //10
+  "",           //11
 ]
 
+function fixToLeftPage(pageID) {
+  return (pageID % 2 == 0) ? pageID : pageID - 1
+}
+
 $(document).ready(($) => {
+  turnByKeyboard()
   const ROOT_ELEMENT = $("#root");
   const BOOK = $("<div>").attr("id", "book").appendTo(ROOT_ELEMENT);
   (async () => {
@@ -40,106 +39,25 @@ $(document).ready(($) => {
     });
 
     $(BOOK).bind('turn', function (a, pageid) {
-      window.location.hash = pageid
-      if (pageid === 8) {
-
-        const configNoLoop = {
-          imagesPath: "./inc/img/lika/Lika_Skizb_resized",
-          images_slug: "Lika_Skizb_",
-          lastNumber: 177,
-          positions: 5,
-          loop: false
-        }
-
-        const configLoop = {
-          imagesPath: "./inc/img/lika/Lika_Loop_resized",
-          images_slug: "Lika_Loop_",
-          lastNumber: 88,
-          positions: 5,
-          loop: true
-        }
-
-        initAnimation(pageid, configNoLoop, () => {
-          initAnimation(pageid, configLoop, undefined, animatonRate)
-        }, animatonRate)
+      if (pageid == 0 || pageid == 1) {
+        setTimeout(() => {
+          $(BOOK).turn('page', 2);
+        }, 500)
       }
+
+      turnSound.play()
+
+      animate = false
+      pageid = fixToLeftPage(pageid)
+      window.location.hash = pageid
+
+      initAnimation(pageid)
+
     });
 
-    $(BOOK).turn('page', pageid);
+
+    $(BOOK).turn('page', 2);
   })();
-
-
-  function initAnimation(pageid, config, cb, animatonRate) {
-    let linkSequence = new LinkSequenceGenerator(config)
-    let pageCurrent = $(".p" + pageid)
-    let pageNext = $(".p" + (pageid + 1))
-    next(linkSequence)
-
-    function next(linkSequence) {
-      let nextLink = linkSequence.next()
-      if (nextLink.done) {
-        if (cb) {
-          cb()
-        }
-
-        return
-      }
-
-      let img = new Image()
-      img.src = nextLink.path
-      img.onload = () => {
-        pageCurrent.css("background-image", `url('${img.src}')`)
-        pageNext.css("background-image", `url('${img.src}')`)
-        setTimeout(() => {
-          next(linkSequence)
-        }, animatonRate)
-
-      }
-
-      img.error = () => {
-        setTimeout(() => {
-          next(linkSequence)
-        }, animatonRate)
-      }
-     
-    }
-
-    //Load images to DOM, for performance reasons
-    /*
-    let imagesPlace = $("#images-hidden")
-    imagesPlace.empty()
-    let d = linkSequence.next()
-    do {
-      d = linkSequence.next()
-      imagesPlace.append($("<img>").attr("src", d.path))
-    } while (!d.done)
-
-    linkSequence.reset()
-    */
-
-    //Make Animation
-    /*
-    let intervalID = setInterval(() => {
-      console.log("interval statrted")
-      let nextLink = linkSequence.next()
-      //console.log(nextLink.path)
-      
-      if (nextLink.done) {
-        console.log("end of animation")
-        if (cb!=undefined) {
-          console.log("end of animation 1")
-          clearInterval(intervalID)  
-          cb()
-        }
-        clearInterval(intervalID)
-      }
-      else {
-        pageCurrent.css("background-image", `url('${nextLink.path}')`)
-        pageNext.css("background-image", `url('${nextLink.path}')`)
-      }
-    }, 100);
-    */
-  }
 
 
   async function getPage(pageNum, container) {
@@ -148,12 +66,51 @@ $(document).ready(($) => {
     );
     if (res.status != 404) {
       const pageHtml = await res.text();
-      $("<div>")
-        .addClass("page")
-        .css("background-image", `url('./inc/img/${BACKGROUNDS[pageNum]}')`)
-        .html(pageHtml)
-        .appendTo(container);
+      const bookPage = $("<div>").addClass("page").html(pageHtml)
+
+      if (BACKGROUNDS[pageNum] != undefined) {
+        bookPage.css("background-image", `url('./inc/img/${BACKGROUNDS[pageNum]}')`)
+      }
+      bookPage.appendTo(container);
+
       await getPage(++pageNum, BOOK);
     }
   }
+
+  function turnByKeyboard() {
+    document.addEventListener("keydown", keyboardControl);
+    function keyboardControl(e) {
+      if (e.key == "ArrowRight") {
+        $(BOOK).turn('next')
+      }
+      else if (e.key == "ArrowLeft") {
+        $(BOOK).turn('previous')
+      }
+
+    }
+  }
+
 });
+
+
+function initAnimation(pageid, cb) {
+  let page = getDataByPageID(pageid)
+
+  if (page != null) {
+    animate = true
+    const configNoLoop = page.configNoLoop
+    const configLoop = page.configLoop
+
+    if (cb !== undefined) {
+      animateFrames(pageid, configNoLoop, cb, animatonRate)
+    }
+    else {
+      animateFrames(pageid, configNoLoop, () => {
+        if (configLoop !== undefined) {
+          animateFrames(pageid, configLoop, undefined, animatonRate)
+        }
+      }, animatonRate)
+
+    }
+  }
+}

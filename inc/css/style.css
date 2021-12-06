@@ -123,6 +123,7 @@ header h1 {
 
 .page.even .page-wrapper-fix {
   padding: 5% 0% 5% 7%;
+  /* background-color: crimson; */
 }
 
 .page.odd .page-wrapper-fix {
@@ -286,5 +287,10 @@ h2.toc-title::before {
 }
 
 #images-hidden {
+  display: none;
+}
+
+
+#turnsound{
   display: none;
 }
