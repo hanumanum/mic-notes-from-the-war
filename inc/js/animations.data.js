@@ -27,14 +27,3 @@ const animationsData = [
         }
     }
 ]
-
-
-
-function getDataByPageID(pageID) {
-    for (let animD of animationsData) {
-        if (animD.pageid == pageID) {
-            return animD
-        }
-    }
-    return null
-}

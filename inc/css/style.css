@@ -4,20 +4,16 @@
   font-style : normal;
 }
 
-
 * {
   box-sizing : border-box;
   font-size  : 100%;
   font-family: "GEA-Grapalat";
-  /* position: relative; */
-  /* width   : 90%; */
 }
 
 body {
   margin  : 0;
   padding : 0;
   overflow: hidden;
-
 }
 
 #root {
@@ -45,6 +41,7 @@ header {
   display         : flex;
   align-items     : center;
   padding         : 14px;
+  justify-content : space-between;
 }
 
 header>div {
@@ -73,12 +70,42 @@ header h1 {
   text-transform: uppercase;
 }
 
+.share-icon {
+  width          : 40px;
+  height         : 40px;
+  float          : left;
+  background-size: cover;
+  margin         : 0px 2px;
+  opacity        : 0.7;
+  cursor         : pointer;
+}
+
+.share-icon:hover {
+  opacity: 1;
+}
+
+.share-icon-instagram {
+  background-image: url("../img/Instagram.png");
+}
+
+.share-icon-twitter {
+  background-image: url("../img/Twitter.png");
+}
+
+.share-icon-facebook {
+  background-image: url("../img/FB.png");
+}
+
+.share-icon-lang {
+  background-image: url("../img/EN.png");
+  margin-right    : 30px;
+}
+
 /* ____________ */
 /* BOOK  */
 /* ____________ */
 
 #book {
-  /* background-color: #ccc; */
   opacity: 0;
   margin : auto;
 
@@ -112,8 +139,50 @@ header h1 {
 }
 
 #book-border img {
-  width : calc(100vw * 60 / 100 + 150px);
+  /* width : calc(100vw * 60 / 100 + 150px); */
   height: calc(100vh - 55px - 120px + 91px);
+}
+
+
+.controls-start,
+.controls-toc,
+.controls-turn {
+  width          : 40px;
+  height         : 40px;
+  position: absolute;
+  background-size: cover;
+  cursor: pointer;
+  opacity: 0.7;
+  display: none;
+}
+
+.controls-start:hover,
+.controls-toc:hover,
+.controls-turn:hover{
+  opacity: 1;
+}
+
+.controls-start {
+  background-image: url("../img/Home.png");
+  left            : 285px;
+  top             : 80px;
+}
+
+.controls-toc {
+  background-image: url("../img/Content.png");
+  left            : 284px;
+  top             : 136px;
+}
+
+.controls-turn{
+  background-image: url("../img/Slaq.png");
+  left: 1593px;
+  bottom: 116px;
+  padding-top: 44px;
+  font-size: 13px;
+  color: #978a77;
+  font-weight: bold;
+  text-align: center;
 }
 
 .page-wrapper-fix {
@@ -122,12 +191,11 @@ header h1 {
 }
 
 .page.even .page-wrapper-fix {
-  padding: 5% 0% 5% 7%;
-  /* background-color: crimson; */
+  padding            : 5% 0% 5% 7%;
 }
 
 .page.odd .page-wrapper-fix {
-  padding: 5% 9% 5% 5%;
+  padding : 5% 9% 5% 5%;
   position: relative;
 }
 
@@ -162,17 +230,16 @@ p {
 }
 
 .toc-content {
-  width    : 78%;
-  /* margin: 0 0 0 7%; */
+  width: 84%;
   margin   : 0 auto;
 }
 
 h2.toc-title {
   font-size     : 1.6em;
-  margin-left   : 3%;
-  margin-top    : 25%;
+  margin-left: 16px;
+  margin-top: 12%;
   text-transform: uppercase;
-  height        : 58px;
+  height: 62px;
 }
 
 h2.toc-title::before {
@@ -189,27 +256,21 @@ h2.toc-title::before {
 .toc-grid {
   display                 : grid;
   grid-template-columns   : auto auto;
-  /* padding              : 10px; */
   grid-gap                : 22px 20px;
 }
 
 .toc-grid-item {
-  /* background-color: rgba(255, 255, 255, 0.8); */
-  /* border          : 1px solid rgba(0, 0, 0, 0.8); */
-  /* padding         : 20px; */
   padding: 0;
 }
 
 .top-title {
   margin        : 0;
-  /* margin-left: 10px; */
   font-size     : 1.1em;
   padding       : 0;
 }
 
 .toc-author-name {
   margin        : 0;
-  /* margin-left: 10px; */
   font-size     : .9em;
   padding       : 0;
 }
@@ -217,8 +278,6 @@ h2.toc-title::before {
 .toc-link {
   margin   : 0;
   display  : block;
-  /* width : 70%; */
-  /* height: 70%; */
 }
 
 .toc-thumbnail {
@@ -230,7 +289,7 @@ h2.toc-title::before {
 }
 
 .toc-content-second {
-  margin-top: 35%;
+  margin-top: 23%;
 }
 
 .article-title {
@@ -264,10 +323,7 @@ h2.toc-title::before {
   position  : absolute;
   left      : 99px;
   top       : 59%;
-  /* border : solid 1px gray; */
-  /* width  : 120px; */
   height    : 41px;
-  /* display: block; */
 }
 
 .article-author-info {
@@ -290,26 +346,22 @@ h2.toc-title::before {
   display: none;
 }
 
-
-#turnsound{
+#turnsound {
   display: none;
 }
 
-.animation-sound{
+.animation-sound {
   display: none;
 }
 
-.page-article-page p{
-  /* padding: 6px 7%; */
+.page-article-page p {
   margin: 13px 9% 0px 9%;
 }
 
-.stars{
+.stars {}
 
-}
-
-.date{
-  margin-top: 0px !important;
-  text-align: right;
+.date {
+  margin-top : 0px !important;
+  text-align : right;
   padding-top: 3px;
 }

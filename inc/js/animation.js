@@ -45,3 +45,54 @@ function animateFrames(pageid, config, cb, animatonRate) {
     }
 
 }
+
+
+
+function initAnimation(pageid, cb) {
+    let page = getDataByPageID(pageid, animationsData)
+  
+    if (page != null) {
+      initAnimationSound(pageid)
+  
+      animate = true
+      const configNoLoop = page.configNoLoop
+      const configLoop = page.configLoop
+  
+      if (cb !== undefined) {
+        animateFrames(pageid, configNoLoop, cb, animatonRate)
+      }
+      else {
+        animateFrames(pageid, configNoLoop, () => {
+          if (configLoop !== undefined) {
+            animateFrames(pageid, configLoop, undefined, animatonRate)
+          }
+        }, animatonRate)
+  
+      }
+    }
+  }
+  
+  function stopAnimationSound() {
+    if (animationSound) {
+      animationSound.pause()
+      animationSound.currentTime = 0
+    }
+  }
+  
+  
+  function initAnimationSound(pageid) {
+    animationSound = document.getElementById("animation-sound-page" + pageid)
+    if (animationSound) {
+      animationSound.loop = true
+      animationSound.play()
+    }
+  }
+
+  function getDataByPageID(pageID, animationsData) {
+    for (let animD of animationsData) {
+        if (animD.pageid == pageID) {
+            return animD
+        }
+    }
+    return null
+}
