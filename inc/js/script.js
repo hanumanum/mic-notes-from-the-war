@@ -1,5 +1,6 @@
-let pageid = Number(window.location.hash.replace("#", ""))
+let pageid = parseInt(Number(window.location.hash.replace("#", "")))
 const turnSound = document.getElementById("turnsound")
+let videosToPlay = []
 let animationSound = undefined
 pageid = (pageid == 0 || pageid == 1) ? 2 : pageid
 
@@ -59,7 +60,17 @@ $(document).ready(($) => {
 
       stopAnimationSound()
       initAnimation(pageid)
+      
+      if(pageid==2){
+        videosToPlay = $(".inpageVideos")
+        videosToPlay.trigger("play")
+      }
+      else{
+        videosToPlay.trigger("pause")
+      }
+
       fixControlsPositions()
+    
     });
     $(BOOK).turn('page', pageid);
   })();

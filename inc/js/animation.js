@@ -96,3 +96,14 @@ function initAnimation(pageid, cb) {
     }
     return null
 }
+
+/*
+function initVideo(pageid) {
+    let page = getDataByPageID(pageid, videosData)
+    if (page != null) {
+        let video = document.getElementById("video-page" + pageid)
+        video.src = page.path
+        video.play()
+    }
+}
+*/

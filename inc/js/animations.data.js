@@ -16,6 +16,7 @@ const animationsData = [
             loop: true
         }
     },
+    /*
     {
         pageid: 2,
         configNoLoop: {
@@ -26,4 +27,5 @@ const animationsData = [
             loop: false
         }
     }
+    */
 ]

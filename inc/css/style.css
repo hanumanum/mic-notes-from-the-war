@@ -365,3 +365,12 @@ h2.toc-title::before {
   text-align : right;
   padding-top: 3px;
 }
+
+.inpageVideos{
+  
+}
+
+.inpageVideos-right{
+  left: -100%;
+  position: relative;
+}
