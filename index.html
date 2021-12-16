@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="hy">
-
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="./inc/css/green-audio-player.css" />
   <link rel="stylesheet" href="./inc/css/style.css" />
   <title>Նոթեր պատերազմից</title>
 </head>
@@ -23,6 +23,7 @@
       </div>
       <div>
         <div>
+          <div class="share-icon sound-icon-off"></div>
           <div class="share-icon share-icon-lang"></div>
           <div class="share-icon share-icon-facebook"></div>
           <div class="share-icon share-icon-twitter"></div>
@@ -34,6 +35,11 @@
       <div class="controls-start"></div>
       <div class="controls-toc"></div>
       <img src="./inc/img/outline.png" id="outline" alt="" srcset="">
+      <video muted id="coverVideo">
+        <source src="./inc/videos/cover-page.mp4" type="video/mp4">
+      </video>
+      <audio src="inc/sounds/cover_page_loop_sound.mp3" id="coverAudio"></audio>
+      <div id="start">սկսել</div>
       <div class="controls-turn">
         Թերթիր <br> էջը
       </div>
@@ -42,6 +48,7 @@
   <div id="images-hidden"></div>
   <audio id="turnsound" type="audio/wav" src="./inc/sounds/turn-sound.wav"></audio>
   <script src="./inc/js/lib/jquery.min.1.7.js"></script>
+  <script src="./inc/js/lib/green-audio-player.min.js"></script>
   <script src="./inc/js/lib/turn.min.js"></script>
   <script src="./inc/js/functions.js"></script>
   <script src="./inc/js/animations.data.js"></script>

@@ -101,6 +101,16 @@ header h1 {
   margin-right    : 30px;
 }
 
+
+.sound-icon-off {
+  background-image: url("../img/sound\ off.png");
+}
+
+.sound-icon-on {
+  background-image: url("../img/sound\ on.png");
+}
+
+
 /* ____________ */
 /* BOOK  */
 /* ____________ */
@@ -149,16 +159,16 @@ header h1 {
 .controls-turn {
   width          : 40px;
   height         : 40px;
-  position: absolute;
+  position       : absolute;
   background-size: cover;
-  cursor: pointer;
-  opacity: 0.7;
-  display: none;
+  cursor         : pointer;
+  opacity        : 0.7;
+  display        : none;
 }
 
 .controls-start:hover,
 .controls-toc:hover,
-.controls-turn:hover{
+.controls-turn:hover {
   opacity: 1;
 }
 
@@ -174,15 +184,15 @@ header h1 {
   top             : 136px;
 }
 
-.controls-turn{
+.controls-turn {
   background-image: url("../img/Slaq.png");
-  left: 1593px;
-  bottom: 116px;
-  padding-top: 44px;
-  font-size: 13px;
-  color: #978a77;
-  font-weight: bold;
-  text-align: center;
+  left            : 1593px;
+  bottom          : 116px;
+  padding-top     : 44px;
+  font-size       : 13px;
+  color           : #978a77;
+  font-weight     : bold;
+  text-align      : center;
 }
 
 .page-wrapper-fix {
@@ -191,7 +201,7 @@ header h1 {
 }
 
 .page.even .page-wrapper-fix {
-  padding            : 5% 0% 5% 7%;
+  padding: 5% 0% 5% 7%;
 }
 
 .page.odd .page-wrapper-fix {
@@ -230,16 +240,16 @@ p {
 }
 
 .toc-content {
-  width: 84%;
-  margin   : 0 auto;
+  width : 84%;
+  margin: 0 auto;
 }
 
 h2.toc-title {
   font-size     : 1.6em;
-  margin-left: 16px;
-  margin-top: 12%;
+  margin-left   : 16px;
+  margin-top    : 12%;
   text-transform: uppercase;
-  height: 62px;
+  height        : 62px;
 }
 
 h2.toc-title::before {
@@ -254,9 +264,9 @@ h2.toc-title::before {
 
 
 .toc-grid {
-  display                 : grid;
-  grid-template-columns   : auto auto;
-  grid-gap                : 22px 20px;
+  display              : grid;
+  grid-template-columns: auto auto;
+  grid-gap             : 22px 20px;
 }
 
 .toc-grid-item {
@@ -264,20 +274,20 @@ h2.toc-title::before {
 }
 
 .top-title {
-  margin        : 0;
-  font-size     : 1.1em;
-  padding       : 0;
+  margin   : 0;
+  font-size: 1.1em;
+  padding  : 0;
 }
 
 .toc-author-name {
-  margin        : 0;
-  font-size     : .9em;
-  padding       : 0;
+  margin   : 0;
+  font-size: .9em;
+  padding  : 0;
 }
 
 .toc-link {
-  margin   : 0;
-  display  : block;
+  margin : 0;
+  display: block;
 }
 
 .toc-thumbnail {
@@ -320,10 +330,11 @@ h2.toc-title::before {
 }
 
 .article-author-sound {
-  position  : absolute;
-  left      : 99px;
-  top       : 59%;
-  height    : 41px;
+  position           : absolute;
+  left               : 99px;
+  top                : 68%;
+  height             : 41px;
+  /* background-color: transparent; */
 }
 
 .article-author-info {
@@ -366,11 +377,64 @@ h2.toc-title::before {
   padding-top: 3px;
 }
 
-.inpageVideos{
-  
+.inpageVideos {}
+
+.inpageVideos-right {
+  left    : -100%;
+  position: relative;
 }
 
-.inpageVideos-right{
-  left: -100%;
+#coverVideo {
+  position: absolute;
+  width   : 83%;
+}
+
+#outline {
+  display: none;
+}
+
+#start {
+  color         : #9b6640;
+  position      : fixed;
+  border        : solid 4px #9b6640;
+  padding       : 1px 10px 5px 10px;
+  font-size     : 1.5em;
+  border-radius : 5px;
+  left          : 60%;
+  font-weight   : bold;
+  bottom        : 22%;
+  height        : 48px;
+  cursor        : pointer;
+  /* line-height: 1.4em; */
+  /* display    : inline-block; */
+}
+
+#start:hover {
+  box-shadow: white 0px 0px 10px;
+}
+
+#coverAudio {
+  display: none;
+}
+
+.green-audio-player {
+  width: 53%;
+  min-width: 57%;
+  height: 21px;
+  top: 42px;
   position: relative;
+  background-color: transparent;
+  box-shadow:none;
+  left: 40px;
+}
+
+.green-audio-player .slider .gap-progress .pin{
+  background-color: #566574;
+}
+.green-audio-player .slider .gap-progress{
+  background-color: #566574;
+}
+
+.green-audio-player .volume {
+  display: none;
 }

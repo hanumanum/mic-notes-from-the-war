@@ -1,4 +1,19 @@
 /* ===== Event initiator Functions ==== */
+function initStartButtonFix() {
+  const coverVideo = $("#coverVideo")
+  const startButton = $("#start")
+
+  startButton.css({
+    "top": coverVideo.offset().top + 5 * (coverVideo.height() / 6)
+  })
+
+  /*
+  outline.offset().top + outline.innerHeight() - adjustTop - 30,
+    "left": outline.offset().left + outline.innerWidth() + 10,
+  */
+
+}
+
 
 function initControls(BOOK) {
   $(".controls-start").click(() => {
@@ -39,12 +54,15 @@ async function getPage(pageNum, container) {
   if (res.status != 404) {
     const pageHtml = await res.text();
 
-    const bookPage = $("<div>").addClass("page").html(pageHtml)
+    /*
+    
     if (BACKGROUNDS[pageNum] != undefined) {
       bookPage.css("background-image", `url('./inc/img/${BACKGROUNDS[pageNum]}')`)
     }
+    
+    */
+    const bookPage = $(pageHtml);
     bookPage.appendTo(container);
-
     await getPage(++pageNum, container);
   }
 }
@@ -64,19 +82,69 @@ function fixControlsPositions() {
     "top": outline.offset().top,
     "left": outline.offset().left - adjustLeft,
     "position": "fixed",
-    "display":"block"
+    "display": "block"
   })
   $(".controls-toc").css({
     "top": outline.offset().top + adjustTop,
     "left": outline.offset().left - adjustLeft,
     "position": "fixed",
-    "display":"block"
+    "display": "block"
   })
 
   $(".controls-turn").css({
     "top": outline.offset().top + outline.innerHeight() - adjustTop - 30,
     "left": outline.offset().left + outline.innerWidth() + 10,
     "position": "fixed",
-    "display":"block"
+    "display": "block"
   })
+}
+
+
+function switchSound(e) {
+  allowSounds = !allowSounds
+  const className = allowSounds ? "sound-icon-on" : "sound-icon-off"
+  $(this).removeClass().addClass(className).addClass("share-icon")
+
+  if (coverVideo) {
+    coverVideo.muted = !allowSounds
+  }
+
+  if (coverAudio) {
+    coverAudio.muted = !allowSounds
+  }
+
+  if (greenSoundPlayers) {
+    greenSoundPlayers.player.volume = (allowSounds) ? 0.81 : 0
+  }
+}
+
+
+function hideCoverPage() {
+  $("#start").hide()
+  if (coverVideo) {
+    coverVideo.pause()
+    $(coverVideo).hide()
+  }
+  if (coverAudio) {
+    coverAudio.pause()
+  }
+}
+
+function initCoverPage(BOOK) {
+  coverVideo.play()
+  coverVideo.onended = () => {
+    if (allowSounds) {
+      coverAudio.loop = true
+      coverAudio.play()
+    }
+  }
+  $(".sound-icon-off").click(switchSound)
+
+  $(window).resize(initStartButtonFix)
+  $(window).load(initStartButtonFix)
+  $("#start").click(() => {
+    hideCoverPage()
+    initBook(BOOK);
+  })
+
 }

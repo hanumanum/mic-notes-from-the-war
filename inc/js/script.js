@@ -1,6 +1,11 @@
-let pageid = parseInt(Number(window.location.hash.replace("#", "")))
+let allowSounds = false
+const coverVideo = document.getElementById("coverVideo")
+const coverAudio = document.getElementById("coverAudio")
 const turnSound = document.getElementById("turnsound")
+let greenSoundPlayers
+
 let videosToPlay = []
+let pageid = parseInt(Number(window.location.hash.replace("#", "")))
 let animationSound = undefined
 pageid = (pageid == 0 || pageid == 1) ? 2 : pageid
 
@@ -8,33 +13,18 @@ let animate = false
 const animatonRate = 50
 
 const outline = document.getElementById("outline")
-const BACKGROUNDS = [
-  undefined,  //0
-  undefined,   //1
-  undefined,  //2
-  undefined,  //3
-  "page 7.png", //4
-  "page 7.png", //5
-  "page 7.png", //6
-  "page 7.png", //7
-  "page 2.png", //8
-  "page 2.png", //9
-  "",           //10
-  "",           //11
-  "page 6.png", //12
-  "page 6.png", //13
-  "page 6.png", //14
-  "page 6.png", //15
-  "page 6.png", //16
-  "page 6.png", //17
-
-]
 
 $(document).ready(($) => {
   const ROOT_ELEMENT = $("#root");
   const BOOK = $("<div>").attr("id", "book").appendTo(ROOT_ELEMENT);
 
+  initCoverPage(BOOK)
+});
+
+
+function initBook(BOOK) {
   (async () => {
+    $("#outline").fadeIn(1000)
     initControls(BOOK)
     turnByKeyboard(BOOK)
 
@@ -52,7 +42,10 @@ $(document).ready(($) => {
         }, 500)
       }
 
-      turnSound.play()
+      if (allowSounds) {
+        turnSound.play()
+      }
+
 
       animate = false
       pageid = fixToLeftPage(pageid)
@@ -60,19 +53,24 @@ $(document).ready(($) => {
 
       stopAnimationSound()
       initAnimation(pageid)
-      
-      if(pageid==2){
+
+      /*
+      if (pageid == 2) {
         videosToPlay = $(".inpageVideos")
         videosToPlay.trigger("play")
       }
-      else{
+      else {
         videosToPlay.trigger("pause")
       }
+      */
 
       fixControlsPositions()
-    
+
     });
     $(BOOK).turn('page', pageid);
-  })();
+    greenSoundPlayers = new GreenAudioPlayer('.autor-audio-green');
 
-});
+  })();
+}
+
+
