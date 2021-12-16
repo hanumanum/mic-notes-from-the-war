@@ -6,12 +6,6 @@ function initStartButtonFix() {
   startButton.css({
     "top": coverVideo.offset().top + 5 * (coverVideo.height() / 6)
   })
-
-  /*
-  outline.offset().top + outline.innerHeight() - adjustTop - 30,
-    "left": outline.offset().left + outline.innerWidth() + 10,
-  */
-
 }
 
 
