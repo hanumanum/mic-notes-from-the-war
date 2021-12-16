@@ -98,18 +98,17 @@ header h1 {
 
 .share-icon-lang {
   background-image: url("../img/EN.png");
-  margin-right    : 30px;
 }
-
 
 .sound-icon-off {
   background-image: url("../img/sound\ off.png");
+  margin-right    : 30px;
 }
 
 .sound-icon-on {
   background-image: url("../img/sound\ on.png");
+  margin-right    : 30px;
 }
-
 
 /* ____________ */
 /* BOOK  */
