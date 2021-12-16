@@ -11,7 +11,7 @@ function initStartButtonFix() {
 
 function initControls(BOOK) {
   $(".controls-start").click(() => {
-    BOOK.turn("page", 2);
+    window.location = "/"
   })
 
   $(".controls-toc").click(() => {
