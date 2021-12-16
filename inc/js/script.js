@@ -6,11 +6,12 @@ let greenSoundPlayers
 
 let videosToPlay = []
 let pageid = parseInt(Number(window.location.hash.replace("#", "")))
-let animationSound = undefined
+
 pageid = (pageid == 0 || pageid == 1) ? 2 : pageid
 
-let animate = false
-const animatonRate = 50
+//let animationSound = undefined
+//let animate = false
+//const animatonRate = 50
 
 const outline = document.getElementById("outline")
 
@@ -51,8 +52,8 @@ function initBook(BOOK) {
       pageid = fixToLeftPage(pageid)
       window.location.hash = pageid
 
-      stopAnimationSound()
-      initAnimation(pageid)
+      //stopAnimationSound()
+      //initAnimation(pageid)
 
       /*
       if (pageid == 2) {
@@ -69,8 +70,23 @@ function initBook(BOOK) {
     });
     $(BOOK).turn('page', pageid);
     greenSoundPlayers = new GreenAudioPlayer('.autor-audio-green');
-
+    initTOCHover()
   })();
 }
 
+function initTOCHover(){
+  const whitePartSize = 10
+  const hoverImage = $("<img>").attr("src", "./inc/img/hover.png").addClass("hoverImage")
+  $(".toc-thumbnail").hover(mouseIn, mouseOut)
+
+  function mouseIn(){
+    hoverImage.width($(this).width()+2*whitePartSize)
+    hoverImage.css({"margin-left": -$(this).width() - whitePartSize, "margin-top": -whitePartSize})
+    $(this).after(hoverImage)
+  }
+
+  function mouseOut(){
+    
+  }
+}
 

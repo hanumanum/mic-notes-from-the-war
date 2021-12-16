@@ -295,7 +295,7 @@ h2.toc-title::before {
 }
 
 .toc-thumbnail:hover {
-  border: solid 1px gray;
+  /* border: solid 1px gray; */
 }
 
 .toc-content-second {
@@ -437,4 +437,8 @@ h2.toc-title::before {
 
 .green-audio-player .volume {
   display: none;
+}
+
+.hoverImage{
+  position: absolute;
 }

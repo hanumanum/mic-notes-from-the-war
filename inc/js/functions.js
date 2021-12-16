@@ -15,7 +15,7 @@ function initControls(BOOK) {
   })
 
   $(".controls-toc").click(() => {
-    BOOK.turn("page", 6);
+    BOOK.turn("page", 4);
   })
 
   $(".controls-turn").click(() => {
