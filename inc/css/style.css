@@ -385,7 +385,7 @@ h2.toc-title::before {
 
 #coverVideo {
   position: absolute;
-  width   : 83%;
+  height  : calc(100vh - 55px - 120px + 91px);
 }
 
 #outline {
@@ -417,20 +417,21 @@ h2.toc-title::before {
 }
 
 .green-audio-player {
-  width: 53%;
-  min-width: 57%;
-  height: 21px;
-  top: 42px;
-  position: relative;
+  width           : 53%;
+  min-width       : 57%;
+  height          : 21px;
+  top             : 42px;
+  position        : relative;
   background-color: transparent;
-  box-shadow:none;
-  left: 40px;
+  box-shadow      : none;
+  left            : 40px;
 }
 
-.green-audio-player .slider .gap-progress .pin{
+.green-audio-player .slider .gap-progress .pin {
   background-color: #566574;
 }
-.green-audio-player .slider .gap-progress{
+
+.green-audio-player .slider .gap-progress {
   background-color: #566574;
 }
 
@@ -438,6 +439,6 @@ h2.toc-title::before {
   display: none;
 }
 
-.hoverImage{
+.hoverImage {
   position: absolute;
 }
