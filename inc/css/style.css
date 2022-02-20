@@ -369,7 +369,9 @@ h2.toc-title::before {
   font-size: 18px;
 }
 
-.stars {}
+.stars {
+    text-align: center;
+}
 
 .date {
   /* margin-top : 0px !important; */
