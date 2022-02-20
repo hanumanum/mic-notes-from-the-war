@@ -9,6 +9,37 @@ function initStartButtonFix() {
 }
 
 
+function initDoubledVideos() {
+  const inPageVideos = []
+
+  const check = function (pageid) {
+    const leftPageId = pageid % 2 == 0 ? pageid : pageid - 1
+    const currVideo1 = ($(".p" + (leftPageId)).find(".full-page-video")).get(0)
+    const currVideo2 = ($(".p" + (leftPageId + 1)).find(".full-page-video")).get(0)
+
+    if (currVideo1 && currVideo2) {
+      inPageVideos.push(currVideo1)
+      inPageVideos.push(currVideo2)
+
+      for (let v of inPageVideos) {
+        v.play()
+      }
+
+    }
+    else {
+      for (let v of inPageVideos) {
+        v.pause()
+        v.currentTime = 0
+      }
+      inPageVideos.splice(0, inPageVideos.length)
+    }
+
+  }
+
+  return check;
+
+}
+
 function initControls(BOOK) {
   $(".controls-start").click(() => {
     window.location = "/"
@@ -40,7 +71,52 @@ function turnByKeyboard(BOOK) {
 
 }
 
+function makeNewPage(htmltext, backgroundStyle) {
+  if (!htmltext) {
+    htmltext = ""
+  }
+  return `<div class="page" style="${backgroundStyle}">
+  <div class="page-article-page">${htmltext}</div></div>`
+}
+
+
+function paginateArticles(_html) {
+  const parser = new DOMParser();
+  const pages = $(parser.parseFromString(_html, 'text/html'));
+
+  $.each(pages.find(".page-article-page"), function (i, p) {
+    const parts = $(p).find("part").get().reverse()
+    const backgroundStyle = $(p).parent().attr("style")
+    if (parts.length % 2 == 1) {
+      parts.unshift("")
+    }
+
+    for (let part of parts) {
+      let d = makeNewPage(part.innerHTML, backgroundStyle)
+      $(p, pages).parent().after(d)
+    }
+
+    $(p, pages).parent().remove()
+
+  })
+
+  return $(pages).find("body").html();
+}
+
 /* ============== Other helper functions ==================== */
+async function getAllPages(container) {
+  const res = await fetch(
+    `./pages/${$("html").attr("lang")}/all.html`
+  );
+  if (res.status != 404) {
+    const pageHtml = paginateArticles(await res.text());
+
+    const bookPage = $(pageHtml);
+    bookPage.appendTo(container);
+  }
+}
+
+
 async function getPage(pageNum, container) {
   const res = await fetch(
     `./pages/${$("html").attr("lang")}/p-${pageNum}.html`
@@ -48,13 +124,6 @@ async function getPage(pageNum, container) {
   if (res.status != 404) {
     const pageHtml = await res.text();
 
-    /*
-    
-    if (BACKGROUNDS[pageNum] != undefined) {
-      bookPage.css("background-image", `url('./inc/img/${BACKGROUNDS[pageNum]}')`)
-    }
-    
-    */
     const bookPage = $(pageHtml);
     bookPage.appendTo(container);
     await getPage(++pageNum, container);
@@ -136,9 +205,24 @@ function initCoverPage(BOOK) {
 
   $(window).resize(initStartButtonFix)
   $(window).load(initStartButtonFix)
+
   $("#start").click(() => {
     hideCoverPage()
     initBook(BOOK);
   })
+
+}
+
+
+function initTOCHover() {
+  const whitePartSize = 10
+  const hoverImage = $("<img>").attr("src", "./inc/img/hover.png").addClass("hoverImage")
+  $(".toc-thumbnail").hover(mouseIn)
+
+  function mouseIn() {
+    hoverImage.width($(this).width() + 2 * whitePartSize)
+    hoverImage.css({ "margin-left": -$(this).width() - whitePartSize, "margin-top": -whitePartSize })
+    $(this).after(hoverImage)
+  }
 
 }

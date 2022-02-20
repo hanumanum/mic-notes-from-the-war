@@ -366,14 +366,15 @@ h2.toc-title::before {
 
 .page-article-page p {
   margin: 13px 9% 0px 9%;
+  font-size: 18px;
 }
 
 .stars {}
 
 .date {
-  margin-top : 0px !important;
+  /* margin-top : 0px !important; */
   text-align : right;
-  padding-top: 3px;
+  /* padding-top: 3px; */
 }
 
 .inpageVideos {}
@@ -442,3 +443,21 @@ h2.toc-title::before {
 .hoverImage {
   position: absolute;
 }
+
+
+.full-page-video{
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* right: 0; */
+  /* bottom: 0; */
+  width: 200%;
+  height: 100%;
+  background-color: black;
+}
+
+.page-article-page{
+  padding-top: 25px;
+}
+
+.full-page-video-right{left: -100%;}
