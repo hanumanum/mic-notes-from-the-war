@@ -150,6 +150,7 @@ header h1 {
 #book-border img {
   /* width : calc(100vw * 60 / 100 + 150px); */
   height: calc(100vh - 55px - 120px + 91px);
+
 }
 
 
@@ -290,7 +291,9 @@ h2.toc-title::before {
 }
 
 .toc-thumbnail {
-  width: 176px;
+  width: 89%;
+  height: auto;
+  display: inline-flex;
 }
 
 .toc-thumbnail:hover {
@@ -366,7 +369,7 @@ h2.toc-title::before {
 
 .page-article-page p {
   margin   : 13px 9% 0px 9%;
-  font-size: 18px;
+  font-size: 19px;
 }
 
 .stars {

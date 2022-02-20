@@ -63,7 +63,7 @@ function initBook(BOOK) {
     $(BOOK).turn('page', pageid);
     initTOCHover()
     greenSoundPlayers = new GreenAudioPlayer('.autor-audio-green');
-    
+
   })();
 }
 
