@@ -4,7 +4,7 @@ function initStartButtonFix() {
   const startButton = $("#start")
 
   startButton.css({
-    "top": coverVideo.offset().top + 5 * (coverVideo.height() / 6)
+    "top": coverVideo.offset().top + 7 * (coverVideo.height() / 8)
   })
 }
 
@@ -41,6 +41,7 @@ function initDoubledVideos() {
 }
 
 function initControls(BOOK) {
+
   $(".controls-start").click(() => {
     window.location = "/"
   })
@@ -71,11 +72,11 @@ function turnByKeyboard(BOOK) {
 
 }
 
-function makeNewPage(htmltext, backgroundStyle) {
+function makeNewPage(htmltext, backgroundStyle, authorName, title, pageNumber, totalNumber) {
   if (!htmltext) {
     htmltext = ""
   }
-  return `<div class="page" style="${backgroundStyle}">
+  return `<div class="page" style="${backgroundStyle}" data-author="${authorName}" data-title="${title}" data-page-number=${pageNumber} data-total-number=${totalNumber}>
   <div class="page-article-page">${htmltext}</div></div>`
 }
 
@@ -85,15 +86,20 @@ function paginateArticles(_html) {
   const pages = $(parser.parseFromString(_html, 'text/html'));
 
   $.each(pages.find(".page-article-page"), function (i, p) {
-    const parts = $(p).find("part").get().reverse()
+    const parts = $(p).find("part").get() //.reverse()
     const backgroundStyle = $(p).parent().attr("style")
+    const authorName = $(p).parent().data("author")
+    console.log(authorName)
+    const title = $(p).parent().data("title")
+
     if (parts.length % 2 == 1) {
-      parts.unshift("")
+      parts.push("")
     }
 
-    for (let part of parts) {
-      let d = makeNewPage(part.innerHTML, backgroundStyle)
-      $(p, pages).parent().after(d)
+    for (let i = 0; i < parts.length; i++) {
+      let part = parts[i]
+      let d = makeNewPage(part.innerHTML, backgroundStyle, authorName, title, i + 1, parts.length)
+      $(p, pages).parent().before(d)
     }
 
     $(p, pages).parent().remove()
@@ -135,6 +141,26 @@ function fixToLeftPage(pageID) {
   return (pageID % 2 == 0) ? pageID : pageID - 1
 }
 
+function fillPageInfo(pageid) {
+  const title = $(".p" + pageid).data("title")
+  const author = $(".p" + pageid).data("author")
+  const pageNumber = $(".p" + pageid).data("page-number")
+  const totalNumber = $(".p" + pageid).data("total-number")
+  const page = ($("html").attr("lang") == "en") ? "page" : "էջ"
+
+  let pageStr = ""
+  if (!author) {
+    pageStr = `<span class="title">${title}</span>`
+  }
+  else if (!pageNumber) {
+    pageStr = `<span class="title">${title}</span> / ${author}`
+  }
+  else {
+    pageStr = `<span class="title">${title}</span> / ${author} ${page} ${pageNumber}/${totalNumber}`
+  }
+
+  $(".page-info").html(pageStr)
+}
 
 function fixControlsPositions() {
   const adjustTop = 50
@@ -153,6 +179,15 @@ function fixControlsPositions() {
     "position": "fixed",
     "display": "block"
   })
+
+  $(".page-info").css({
+    "top": outline.offset().top - 35,
+    "left": outline.offset().left - 20,
+    "position": "fixed",
+    "display": "block"
+  })
+
+
 
   $(".controls-turn").css({
     "top": outline.offset().top + outline.innerHeight() - adjustTop - 30,

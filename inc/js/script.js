@@ -17,6 +17,8 @@ $(document).ready(($) => {
   const ROOT_ELEMENT = $("#root");
   const BOOK = $("<div>").attr("id", "book").appendTo(ROOT_ELEMENT);
 
+  //hideCoverPage()
+  //initBook(BOOK)
   initCoverPage(BOOK)
 });
 
@@ -37,6 +39,7 @@ function initBook(BOOK) {
     const dblVid = initDoubledVideos()
     $(BOOK).bind("turned", function (a, pageid) {
       dblVid(pageid)
+      fillPageInfo(fixToLeftPage(pageid))
     })
 
 
