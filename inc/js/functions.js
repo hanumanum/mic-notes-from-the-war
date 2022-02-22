@@ -80,6 +80,72 @@ function makeNewPage(htmltext, backgroundStyle, authorName, title, pageNumber, t
   <div class="page-article-page">${htmltext}</div></div>`
 }
 
+function makeParts(_html) {
+  let lines = []
+  let parts = []
+  let text = _html.get(0).innerText.replace(/\s+/g, ' ').trim();
+  //text = text.replace("<part>","")
+  const outline = document.getElementById("outline")
+  const width = (((outline.width * 86) / 100) / 2) - (2 * 50)
+  const height = (window.innerHeight - 55 - 160) - (2 * 100)
+  const lineLenght = 53 //character
+  const lineHeight = Math.floor(height / 20)
+  console.log(lineHeight)
+
+  let line = ""
+  const words = text.split(" ")
+  for (let i = 0; i < words.length; i++) {
+    line += words[i] + " "
+    if ((line + " " + words[i + 1]).length > 53) {
+      lines.push(line)
+      line = ""
+    }
+  }
+
+  let part = ""
+  lineNumber = 0
+  for (let i = 0; i < lines.length; i++) {
+    part += lines[i] + " "
+    lineNumber++
+    if(lineNumber==lineHeight){
+      parts.push(part)
+      lineNumber = 0
+      part = ""
+    }
+  }
+
+
+
+  return parts
+}
+
+function _paginateArticles(_html) {
+  const parser = new DOMParser();
+  const pages = $(parser.parseFromString(_html, 'text/html'));
+
+  $.each(pages.find(".page-article-page"), function (i, p) {
+    const backgroundStyle = $(p).parent().attr("style")
+    const authorName = $(p).parent().data("author")
+    const title = $(p).parent().data("title")
+    const parts = makeParts($(p)) //.reverse()
+
+    if (parts.length % 2 == 1) {
+      parts.push("")
+    }
+
+    for (let i = 0; i < parts.length; i++) {
+      let part = "<p>" + parts[i] + "</p>"
+      let d = makeNewPage(part, backgroundStyle, authorName, title, i + 1, parts.length)
+      $(p, pages).parent().before(d)
+    }
+
+    $(p, pages).parent().remove()
+
+  })
+
+  return $(pages).find("body").html();
+}
+
 
 function paginateArticles(_html) {
   const parser = new DOMParser();
